@@ -1,0 +1,10 @@
+RABU, 24 April 2019
+
+1. Jika ingin membuat program yang bisa menginputkan foto, itu bisa saja dilakukan dan sangat mungkin,
+   silakan dicoba terlebih dahulu. (Bang Huda)
+2. Lalu Bagaimana pengubahan statusnya ketika pemilik dan penemu bertemu? (Kak Ivena)
+   Jawab : Ketika mereka sudah ketemu, maka salah satunya wajib menghubungi admin selaku pihak yang dapat memanajemen
+           semua data. Ketika ada laporan, maka admin akan langsung mengubah status belum ketemu menjadi sudah ketemu.
+3. Setiap orang diwajibkan membuat akun Git(disarankan Github), agar terlihat progresnya.
+4. Pada hari rabu depan, diharapkan untuk membuat UML Diagram(ERD, Use Case, Class, Flowchart).
+5. Asistensi tidak diwajibkan, namun jika ingin asistensi dipersilakan, namun sebelumnya wajib mengatur jadwal.
