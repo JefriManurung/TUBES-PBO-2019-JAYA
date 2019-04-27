@@ -1,0 +1,12 @@
+25 April 2019
+
+1. Membahas Saran, Kritik dan Pertanyaan saat Presentasi
+2. Menyatukan pemikiran tentang Perangkat Lunak yang akan dibuat
+3. Pembagian tugas UML Diagram.
+   - Jefri  : ERD, Use Case
+   - Dwiky  : Flowchart, Use Case
+   - Lauren : Class, Use Case
+4. Pembagian tugas utama tiap anggota.
+   - Jefri  : Coding Utama
+   - Dwiky  : User Interface
+   - Lauren : Basis Data
