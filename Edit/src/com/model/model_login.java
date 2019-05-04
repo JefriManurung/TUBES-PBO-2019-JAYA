@@ -5,6 +5,7 @@ import com.controller.controller_login;
 import com.koneksi.koneksi;
 import com.view.FormBarang;
 import com.view.FormLogin;
+import com.view.FormUserCari;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -23,13 +24,16 @@ public class model_login implements controller_login{
                         + "' and password = '" + password + "'";
            ResultSet rs = st.executeQuery(sql);
            if(rs.next()){
-               if(rs.getString(4).equals("admin")){
+               if(rs.getString(3).equals("admin")){
                    FormBarang bg = new FormBarang();
                    JOptionPane.showMessageDialog(lg, "Selamat Datang Admin!");
                    bg.setVisible(true);
                    lg.setVisible(false);
-               }else if(rs.getString(4).equals("user")){
+               }else if(rs.getString(3).equals("user")){
+                   FormUserCari fuc = new FormUserCari();
                    JOptionPane.showMessageDialog(lg, "Selamat Datang User!");
+                   fuc.setVisible(true);
+                   lg.setVisible(false);
                }
            }else{
                JOptionPane.showMessageDialog(lg, "Periksa Kembali Username Anda!");
