@@ -6,6 +6,8 @@ import java.util.Date;
 public interface controller_usercari {
     public String getID();
     public void setID(String ID);
+    public String getKategori();
+    public void setKategori(String Kategori);
     public String getName();
     public void setName(String Name);
     public Date getDate();

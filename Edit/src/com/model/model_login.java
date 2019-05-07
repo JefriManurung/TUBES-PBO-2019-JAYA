@@ -5,6 +5,7 @@ import com.controller.controller_login;
 import com.koneksi.koneksi;
 import com.view.FormBarang;
 import com.view.FormLogin;
+import com.view.FormMenuUser;
 import com.view.FormUserCari;
 import java.sql.SQLException;
 import java.sql.Connection;
@@ -30,9 +31,9 @@ public class model_login implements controller_login{
                    bg.setVisible(true);
                    lg.setVisible(false);
                }else if(rs.getString(3).equals("user")){
-                   FormUserCari fuc = new FormUserCari();
-                   JOptionPane.showMessageDialog(lg, "Selamat Datang User!");
-                   fuc.setVisible(true);
+                   FormMenuUser fmu = new FormMenuUser();
+                   //JOptionPane.showMessageDialog(lg, "Selamat Datang User!");
+                   fmu.setVisible(true);
                    lg.setVisible(false);
                }
            }else{

@@ -22,13 +22,14 @@ public class model_barang implements controller_barang{
     public void Simpan(FormBarang bg) throws SQLException {
         try{
             Connection con = koneksi.getKoneksi();
-            String sql = "insert barang(nm_barang, tgl_temu, kontak_penemu, keterangan) values(?,?,?,?)";
+            String sql = "insert barang(kategori, nm_barang, tgl_temu, kontak_penemu, keterangan) values(?,?,?,?,?)";
             PreparedStatement prep = con.prepareStatement(sql);
             
-            prep.setString(1, bg.txtnama_barang.getText());
-            prep.setString(2, bg.tgl);
-            prep.setString(3, bg.txtkontak.getText());
-            prep.setString(4, bg.txtspek.getText());
+            prep.setString(1, bg.txtKategori.getSelectedItem().toString());
+            prep.setString(2, bg.txtnama_barang.getText());
+            prep.setString(3, bg.tgl);
+            prep.setString(4, bg.txtkontak.getText());
+            prep.setString(5, bg.txtspek.getText());
             prep.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan!");
@@ -46,18 +47,20 @@ public class model_barang implements controller_barang{
     public void Ubah(FormBarang bg) throws SQLException {
         try{
             Connection con = koneksi.getKoneksi();
-            String sql = "update barang set nm_barang=?,"
+            String sql = "update barang set kategori=?,"
+                         + "nm_barang=?,"
                          + "tgl_temu = ?,"
                          + "kontak_penemu = ?,"
                          + "keterangan = ?"
                          //+ "gambar = ? "
                          + "where kd_barang = ?";
             PreparedStatement prep = con.prepareStatement(sql);
-            prep.setString(1, bg.txtnama_barang.getText());
-            prep.setString(2, bg.tgl);
-            prep.setString(3, bg.txtkontak.getText());
-            prep.setString(4, bg.txtspek.getText());
-            prep.setString(5, bg.txtkode_barang.getText());
+            prep.setString(1, bg.txtKategori.getSelectedItem().toString());
+            prep.setString(2, bg.txtnama_barang.getText());
+            prep.setString(3, bg.tgl);
+            prep.setString(4, bg.txtkontak.getText());
+            prep.setString(5, bg.txtspek.getText());
+            prep.setString(6, bg.txtkode_barang.getText());
             //prep.setString(6, null);
             prep.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data Berhasil Ditambah!");
@@ -91,35 +94,37 @@ public class model_barang implements controller_barang{
     }
     
     public void populateJTable(FormBarang bg){
-        koneksi_usercari mq = new koneksi_usercari();
-        ArrayList<model_usercari> list = mq.BindTable();
-        String[] columnName = {"Kode Barang","Nama Barang", "Tanggal Temu", "Kontak Penemu", "Keterangan", "Gambar"};
-        Object[][] rows = new Object[list.size()][6];
+        koneksi mq = new koneksi();
+        ArrayList<model_barang2> list = mq.BindTable();
+        String[] columnName = {"Kode", "Kategori","Nama Barang", "Tanggal Temu", "Kontak Penemu", "Keterangan", "Gambar"};
+        Object[][] rows = new Object[list.size()][7];
         for(int i=0; i<list.size(); i++){
             rows[i][0] = list.get(i).getID();
-            rows[i][1] = list.get(i).getName();
-            rows[i][2] = list.get(i).getDate();
-            rows[i][3] = list.get(i).getKontak();
-            rows[i][4] = list.get(i).getDesc();
+            rows[i][1] = list.get(i).getKategori();
+            rows[i][2] = list.get(i).getName();
+            rows[i][3] = list.get(i).getDate();
+            rows[i][4] = list.get(i).getKontak();
+            rows[i][5] = list.get(i).getDesc();
             
             if(list.get(i).getMyImage() != null){
-                ImageIcon image = new ImageIcon(new ImageIcon(list.get(i).getMyImage()).getImage().getScaledInstance(200, 150 , Image.SCALE_SMOOTH));
+                ImageIcon image = new ImageIcon(new ImageIcon(list.get(i).getMyImage()).getImage().getScaledInstance(200, 120 , Image.SCALE_SMOOTH));
                 
-                rows[i][5] = image;
+                rows[i][6] = image;
             }else{
-                rows[i][5] = null;
+                rows[i][6] = null;
             }
         }
         
-        model_usercari model = new model_usercari(rows, columnName);
+        model_barang2 model = new model_barang2(rows, columnName);
         bg.tableBarang.setModel(model);
         bg.tableBarang.setRowHeight(120);
-        bg.tableBarang.getColumnModel().getColumn(0).setPreferredWidth(20);
-        bg.tableBarang.getColumnModel().getColumn(1).setPreferredWidth(120);
-        bg.tableBarang.getColumnModel().getColumn(2).setPreferredWidth(40);
-        bg.tableBarang.getColumnModel().getColumn(3).setPreferredWidth(120);
-        bg.tableBarang.getColumnModel().getColumn(4).setPreferredWidth(500);
-        bg.tableBarang.getColumnModel().getColumn(5).setPreferredWidth(150);
+        bg.tableBarang.getColumnModel().getColumn(0).setPreferredWidth(40);
+        bg.tableBarang.getColumnModel().getColumn(1).setPreferredWidth(110);
+        bg.tableBarang.getColumnModel().getColumn(2).setPreferredWidth(160);
+        bg.tableBarang.getColumnModel().getColumn(3).setPreferredWidth(100);
+        bg.tableBarang.getColumnModel().getColumn(4).setPreferredWidth(150);
+        bg.tableBarang.getColumnModel().getColumn(5).setPreferredWidth(570);
+        bg.tableBarang.getColumnModel().getColumn(6).setPreferredWidth(200);
         
     }
     
@@ -162,6 +167,7 @@ public class model_barang implements controller_barang{
 
     @Override
     public void Bersih(FormBarang bg) throws SQLException {
+        bg.txtKategori.setSelectedItem("-- Pilih Kategori --");
         bg.txtkode_barang.setText(null);
         bg.txtnama_barang.setText(null);
         bg.tanggal_nemu.setDate(null);
@@ -181,12 +187,13 @@ public class model_barang implements controller_barang{
                 return;
             }
             */bg.txtkode_barang.setText(bg.tableBarang.getValueAt(pilih, 0).toString());
-            bg.txtnama_barang.setText(bg.tableBarang.getValueAt(pilih, 1).toString());
-            bg.tanggal_nemu.setDate((Date) bg.tableBarang.getValueAt(pilih, 2));
-            bg.txtkontak.setText(bg.tableBarang.getValueAt(pilih, 3).toString());
-            bg.txtspek.setText(bg.tableBarang.getValueAt(pilih, 4).toString());
-            if(bg.tableBarang.getValueAt(pilih, 5) != null){
-                ImageIcon image1 = (ImageIcon) bg.tableBarang.getValueAt(pilih, 5);
+            bg.txtKategori.setSelectedItem(bg.tableBarang.getValueAt(pilih, 1).toString());
+            bg.txtnama_barang.setText((String) bg.tableBarang.getValueAt(pilih, 2).toString());
+            bg.tanggal_nemu.setDate((Date) bg.tableBarang.getValueAt(pilih, 3));
+            bg.txtkontak.setText(bg.tableBarang.getValueAt(pilih, 4).toString());
+            bg.txtspek.setText(bg.tableBarang.getValueAt(pilih, 5).toString());
+            if(bg.tableBarang.getValueAt(pilih, 6) != null){
+                ImageIcon image1 = (ImageIcon) bg.tableBarang.getValueAt(pilih, 6);
                 Image image2 = image1.getImage().getScaledInstance(bg.tampilGambar.getWidth(), bg.tampilGambar.getHeight(), Image.SCALE_SMOOTH);
                 ImageIcon image3 = new ImageIcon(image2);
                 bg.tampilGambar.setIcon(image3);

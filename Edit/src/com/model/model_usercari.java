@@ -11,6 +11,7 @@ public class model_usercari extends AbstractTableModel implements controller_use
     private String[] columns;
     private Object[][] rows;
     private String id;
+    private String kategori;
     private String name;
     private Date tgl;
     private String kontak;
@@ -54,8 +55,9 @@ public class model_usercari extends AbstractTableModel implements controller_use
         return this.columns[col];
     }
     
-    public model_usercari(String Id, String Name, Date tgl, String kontak, String ket, byte[] image){
+    public model_usercari(String Id, String Kategori, String Name, Date tgl, String kontak, String ket, byte[] image){
         this.id = Id;
+        this.kategori = Kategori;
         this.name = Name;
         this.tgl = tgl;
         this.kontak = kontak;
@@ -71,6 +73,16 @@ public class model_usercari extends AbstractTableModel implements controller_use
     @Override
     public void setID(String ID){
         this.id = ID;
+    }
+    
+    @Override
+    public String getKategori(){
+        return kategori;
+    }
+    
+    @Override
+    public void setKategori(String Kategori){
+        this.kategori = Kategori;
     }
     
     @Override
